@@ -19,6 +19,8 @@
       <%= form.text_area :content, class: "tweet-space pb-3" %>
     </div>
 
+    <%= form.hidden_field :date, :value => DateTime.now %>
+
     <div class="actions my-2">
       <%= form.submit class: "btn btn-primary main" %>
     </div>

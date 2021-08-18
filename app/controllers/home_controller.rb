@@ -1,26 +1,15 @@
 class HomeController < ApplicationController
   def index
     @tweets = Tweet.all
+    @tweet = Tweet.new
     @users = User.all
-    @tweet = Tweet.new
     @user = current_user
-  end
-
-  def show
-  end
-
-  # GET /tweets/new
-  def new
-    @tweet = Tweet.new
-  end
-
-  # GET /tweets/1/edit
-  def edit
   end
 
   # POST /tweets or /tweets.json
   def create
     @tweet = Tweet.new(tweet_params.merge(user_id: current_user.id))
+    @tweet.date = DateTime.now
 
     respond_to do |format|
       if @tweet.save
