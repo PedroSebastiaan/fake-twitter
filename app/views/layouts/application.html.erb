@@ -17,17 +17,15 @@
   <%= render 'shared/hero' %>
   <div class="container my-5">
     <% if notice %>
-        <div class="alert alert-dismissible alert-success">
+        <div class="alert alert-dismissible alert-primary text-center">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <h4>Información</h4>
-          <p><%= notice %></p>
+          <p class="display-3 main"><%= notice %></p>
         </div>
       <% end %>
       <% if alert %>
-        <div class="alert alert-dismissible alert-success">
+        <div class="alert alert-dismissible alert-primary text-center">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <h4>Atención</h4>
-          <p><%= alert %></p>
+          <p class="display-3 main"><%= alert %></p>
         </div>
       <% end %>
       <%= yield %>
