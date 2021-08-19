@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index
-    @tweets = Tweet.page(params[:page])
+    @tweets = Tweet.order(id: :desc)
+    @tweets = @tweets.page(params[:page])
     @newtweet = Tweet.new
     @users = User.all
   end

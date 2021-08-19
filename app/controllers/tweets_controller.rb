@@ -16,7 +16,10 @@ class TweetsController < ApplicationController
   end
 
   def retweet
+    @users = User.all
     @tweet = Tweet.find(params[:id])
+    # @tweet.retweet_count += 1
+    @retweet = Tweet.new
   end
 
   # GET /tweets/1/edit

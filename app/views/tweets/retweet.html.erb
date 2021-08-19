@@ -1,0 +1,42 @@
+<h1 class="titles main">Your Gonna Retweet!</h1>
+
+<div class="border border-primary rounded">
+    <% author =  User.find(@tweet.user_id) %>
+    <div class="my-5 mx-5">
+        <%= image_tag(author.avatar, class: "avatar-image") %>
+        <h4 class="tweet-font"><%= author.name %> says</h4>
+        <p class="tweet-font">
+            <%= @tweet.content %>
+        </p>
+        <p class="tweet-font main-color">
+            <%= time_ago_in_words(@tweet.date) %>
+        </p>
+    </div>
+</div>
+
+<div class="container py-3">
+    <%= form_with(model: @retweet, local: true) do |form| %>
+        <% if @retweet.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@retweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+            <ul>
+            <% @retweet.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+            </ul>
+        </div>
+        <% end %>
+
+        <div class="field">
+        <%= form.text_area :content, class: "tweet-space pb-3" %>
+        </div>
+
+        <%= form.hidden_field :date, :value => DateTime.now %>
+        <%= form.hidden_field :retweet_id, :value => @tweet.id%>
+
+        <div class="actions my-2">
+            <%= form.submit class: "btn btn-primary main" %>
+        </div>
+    <% end %>
+</div>
