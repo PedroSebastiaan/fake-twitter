@@ -1,23 +1,21 @@
 class HomeController < ApplicationController
   def index
     @tweets = Tweet.all
-    @tweet = Tweet.new
+    @newtweet = Tweet.new
     @users = User.all
-    @user = current_user
   end
 
   # POST /tweets or /tweets.json
   def create
-    @tweet = Tweet.new(tweet_params.merge(user_id: current_user.id))
-    @tweet.date = DateTime.now
+    @newtweet = Tweet.new(tweet_params.merge(user_id: current_user.id))
+    @newtweet.date = DateTime.now
 
     respond_to do |format|
-      if @tweet.save
-        format.html { redirect_to @tweet, notice: "Tweet was successfully created." }
-        format.json { render :show, status: :created, location: @tweet }
+      if @newtweet.save
+        format.html { redirect_to root_path, notice: "Tweet was successfully created!" }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+        format.html { redirect_to root_path, notice: "We have some problems."  }
+        format.json { render json: @newtweet.errors, status: :unprocessable_entity }
       end
     end
   end

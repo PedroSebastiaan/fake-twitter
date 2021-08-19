@@ -25,10 +25,9 @@ class TweetsController < ApplicationController
 
     respond_to do |format|
       if @tweet.save
-        format.html { redirect_to @tweet, notice: "Tweet was successfully created." }
-        format.json { render :show, status: :created, location: @tweet }
+        format.html { redirect_to root_path, notice: "Tweet was successfully created!" }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to root_path, notice: "We have some problems."  }
         format.json { render json: @tweet.errors, status: :unprocessable_entity }
       end
     end
@@ -65,5 +64,13 @@ class TweetsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def tweet_params
       params.require(:tweet).permit(:content, :retweet_id, :date)
+    end
+
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    def user_params
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end

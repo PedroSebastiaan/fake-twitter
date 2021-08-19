@@ -1,3 +1,49 @@
-<h1 class="titles main">New Tweet!</h1>
+<% if current_user %>
+    <h1 class="titles main">New Tweet!</h1>
+    <%= render 'form', tweet: @tweet %>
+<% end %>
 
-<%= render 'form', tweet: @tweet %>
+
+<% @tweets.each do |tweet| %>
+    <% if current_user %>
+        <% if tweet.user_id == current_user.id %>
+            <div class="my-5">
+                <%= image_tag(current_user.avatar, class: "avatar-image") %>
+                <h4 class="tweet-font">You say</h4>
+                <p class="tweet-font">
+                    <%= tweet.content %>
+                </p>
+                <p class="tweet-font main-color">
+                    <%= time_ago_in_words(tweet.date) %>
+                </p>
+                <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
+                <%= link_to 'Delete', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary tweet-font"%>
+            </div>
+        <% else %>
+            <% author =  User.find(tweet.user_id) %>
+            <div class="my-5">
+                <%= image_tag(author.avatar, class: "avatar-image") %>
+                <h4 class="tweet-font"><%= tweet.user_id %> says</h4>
+                <p class="tweet-font">
+                    <%= tweet.content %>
+                </p>
+                <p class="tweet-font main-color">
+                    <%= time_ago_in_words(tweet.date) %>
+                </p>
+            </div>
+        <% end %>
+    <% else %>
+    <% author =  User.find(tweet.user_id) %>
+        <div class="my-5">
+            <%= image_tag(author.avatar, class: "avatar-image") %>
+            <h4 class="tweet-font"><%= author.name %> says</h4>
+            <p class="tweet-font">
+                <%= tweet.content %>
+            </p>
+            <p class="tweet-font main-color">
+                <%= time_ago_in_words(tweet.date) %>
+            </p>
+        </div>
+    <% end %>
+<% end %>
+

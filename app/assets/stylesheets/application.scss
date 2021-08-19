@@ -18,6 +18,10 @@
     font-family: 'Pacifico', cursive;
 }
 
+.tweet-font {
+    font-family: 'Patrick Hand', cursive;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -253,6 +257,12 @@ margin: 18px
 }
 .tweet-space {
     width: 75%;
+}
+.avatar-image {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 // HeroSection
