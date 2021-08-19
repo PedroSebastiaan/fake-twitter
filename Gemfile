@@ -69,8 +69,11 @@ gem 'jquery-rails'
 # Devise
 gem 'devise'
 
-#Gravatar
+# Gravatar
 gem 'gravatar_image_tag', github: 'mdeering/gravatar_image_tag'
 gem 'gravtastic'
 gem 'image_processing'
+
+# Kaminari
+gem 'kaminari'
 
