@@ -49,6 +49,9 @@
         <% elsif current_user && tweet.user_id != current_user.id %>
             <%= link_to 'Retweet', retweet_path(tweet.id), method: :post, class: "btn btn-primary tweet-font"%>
         <% end %>
+        <% if tweet.retweet_count != 0 %>
+            <p class="tweet-font main-color"><%= tweet.retweet_count %> retweets</p>
+        <% end %>
     </div>
 <% end %>
 
