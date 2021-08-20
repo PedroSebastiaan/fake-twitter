@@ -4,7 +4,7 @@
 <% end %>
 
 <% @tweets.each do |tweet| %>
-    <div class="my-5">
+    <div class="my-5 border border-primary rounded px-5 py-5">
         <%# Tweet Author%>
         <% if current_user && tweet.user_id == current_user.id && tweet.retweet_id != nil %>
             <%= image_tag(current_user.avatar, class: "avatar-image") %>
@@ -49,8 +49,20 @@
         <% elsif current_user && tweet.user_id != current_user.id %>
             <%= link_to 'Retweet', retweet_path(tweet.id), method: :post, class: "btn btn-primary tweet-font"%>
         <% end %>
+        <%# Tweet Count %>
         <% if tweet.retweet_count != 0 %>
             <p class="tweet-font main-color"><%= tweet.retweet_count %> retweets</p>
+        <% end %>
+        <%# Like Button %>
+        <% if current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) == nil %>
+            <%= link_to liked_path(tweet.id), method: :post do %>
+                <i class="far fa-heart"></i>
+            <% end %>
+        <% elsif current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) != nil %>
+            <% unliked = Like.find_by(user_id: current_user.id, tweet_id: tweet.id) %>
+            <%= link_to unliked_path(unliked.id), method: :delete do %>
+                <i class="fas fa-heart"></i>
+            <% end %>
         <% end %>
     </div>
 <% end %>

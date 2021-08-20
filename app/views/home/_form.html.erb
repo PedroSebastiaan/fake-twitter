@@ -3,24 +3,20 @@
     <% if @newtweet.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@newtweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
-
         <ul>
-        <% @newtweet.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+          <% @newtweet.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
         </ul>
       </div>
     <% end %>
-
     <div class="field">
       <div class="d-block">
         <%= form.label :content, "Say something what do you want!", class: "main tweet-title" %>
       </div>
       <%= form.text_area :content, class: "tweet-space pb-3" %>
     </div>
-
     <%= form.hidden_field :date, :value => DateTime.now %>
-
     <div class="actions my-2">
       <%= form.submit class: "btn btn-primary main" %>
     </div>
