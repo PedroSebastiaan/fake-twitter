@@ -4,158 +4,55 @@
 <% end %>
 
 <% @tweets.each do |tweet| %>
-
-    <% if current_user %>
-
-        <% if tweet.user_id == current_user.id %>
-
-            <% if tweet.retweet_id != nil %>
-                <div class="my-5">
-                    <%= image_tag(current_user.avatar, class: "avatar-image") %>
-                    <h4 class="tweet-font">You retweet</h4>
-                    <div class="border border-primary rounded">
-                        <% if Tweet.exists?(tweet.retweet_id) %>
-                            <% retweet_from = Tweet.find(tweet.retweet_id) %>
-                            <% author = User.find(retweet_from.user_id) %>
-                            <div class="my-5 mx-5">
-                                <%= image_tag(author.avatar, class: "avatar-image") %>
-                                <h4 class="tweet-font"><%= author.name %> says</h4>
-                                <p class="tweet-font">
-                                    <%= retweet_from.content %>
-                                </p>
-                                <p class="tweet-font main-color">
-                                    <%= time_ago_in_words(retweet_from.date) %>
-                                </p>
-                            </div>
-                        <% else %>
-                            <p class="tweet-font main-color">
-                                Tweeted Was Deleted...
-                            </p>
-                        <% end %>
-                    </div>
-                    <p class="tweet-font my-2">
-                        <%= tweet.content %>
-                    </p>
-                    <p class="tweet-font main-color">
-                        <%= time_ago_in_words(tweet.date) %>
-                    </p>
-                    <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
-                    <%= link_to 'Delete', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary tweet-font"%>
-                </div>
-            <% else %>
-                <div class="my-5">
-                    <%= image_tag(current_user.avatar, class: "avatar-image") %>
-                    <h4 class="tweet-font">You say</h4>
-                    <p class="tweet-font">
-                        <%= tweet.content %>
-                    </p>
-                    <p class="tweet-font main-color">
-                        <%= time_ago_in_words(tweet.date) %>
-                    </p>
-                    <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
-                    <%= link_to 'Delete', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary tweet-font"%>
-                </div>
-            <% end %>
-        <% else %>
-            <% if tweet.retweet_id != nil %>
-                <div class="my-5">
-                    <% author =  User.find(tweet.user_id) %>
-                        <%= image_tag(author.avatar, class: "avatar-image") %>
-                        <h4 class="tweet-font"><%= author.name %> retweets</h4>
-                        <div class="border border-primary rounded">
-                            <% if Tweet.exists?(tweet.retweet_id) %>
-                                <% retweet_from = Tweet.find(tweet.retweet_id) %>
-                                <% retweet_author = User.find(retweet_from.user_id) %>
-                                <div class="my-5 mx-5">
-                                    <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
-                                    <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
-                                    <p class="tweet-font">
-                                        <%= retweet_from.content %>
-                                    </p>
-                                    <p class="tweet-font main-color">
-                                        <%= time_ago_in_words(retweet_from.date) %>
-                                    </p>
-                                </div>
-                            <% else %>
-                                <p class="tweet-font">
-                                    Tweet Was Deleted...
-                                </p>
-                            <% end %>
-                        </div>
-                        <p class="tweet-font my-2">
-                            <%= tweet.content %>
-                        </p>
-                        <p class="tweet-font main-color">
-                            <%= time_ago_in_words(tweet.date) %>
-                        </p>
+    <div class="my-5">
+        <%# Tweet Author%>
+        <% if current_user && tweet.user_id == current_user.id && tweet.retweet_id != nil %>
+            <%= image_tag(current_user.avatar, class: "avatar-image") %>
+            <h4 class="tweet-font">You retweet</h4>
+        <% elsif current_user && tweet.user_id == current_user.id && tweet.retweet_id == nil %>
+            <%= image_tag(current_user.avatar, class: "avatar-image") %>
+            <h4 class="tweet-font">You say</h4>
+        <% elsif tweet.retweet_id != nil %>
+            <% author =  User.find(tweet.user_id) %>
+            <%= image_tag(author.avatar, class: "avatar-image") %>
+            <h4 class="tweet-font"><%= author.name %> retweets</h4>
+        <% elsif tweet.retweet_id == nil %>
+            <% author =  User.find(tweet.user_id) %>
+            <%= image_tag(author.avatar, class: "avatar-image") %>
+            <h4 class="tweet-font"><%= author.name %> says</h4>
+        <% end %>
+        <%# Retweet Space %>
+        <% if tweet.retweet_id != nil %>
+            <div class="border border-primary rounded">
+                <% if Tweet.exists?(tweet.retweet_id) %>
+                    <% retweet_from = Tweet.find(tweet.retweet_id) %>
+                    <% retweet_author = User.find(retweet_from.user_id) %>
+                    <div class="my-5 mx-5">
+                        <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
+                        <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
+                        <p class="tweet-font"><%= retweet_from.content %></p>
+                        <p class="tweet-font main-color"><%= time_ago_in_words(retweet_from.date) %></p>
                     </div>
                 <% else %>
-                    <% author =  User.find(tweet.user_id) %>
-                    <div class="my-5">
-                        <%= image_tag(author.avatar, class: "avatar-image") %>
-                        <h4 class="tweet-font"><%= author.name %> says</h4>
-                        <p class="tweet-font">
-                            <%= tweet.content %>
-                        </p>
-                        <p class="tweet-font main-color">
-                            <%= time_ago_in_words(tweet.date) %>
-                        </p>
-                    </div>
+                    <p class="tweet-font">Tweet Was Deleted...</p>
                 <% end %>
-                <%= link_to 'Retweet', retweet_path(tweet.id), method: :post, class: "btn btn-primary tweet-font"%>
-        <% end %>
-
-    <% else %>
-
-        <% if tweet.retweet_id != nil %>
-            <div class="my-5">
-                <% author =  User.find(tweet.user_id) %>
-                <%= image_tag(author.avatar, class: "avatar-image") %>
-                <h4 class="tweet-font"><%= author.name %> retweets</h4>
-                <div class="border border-primary rounded">
-                    <% if Tweet.exists?(tweet.retweet_id) %>
-                        <% retweet_from = Tweet.find(tweet.retweet_id) %>
-                        <% retweet_author = User.find(retweet_from.user_id) %>
-                        <div class="my-5 mx-5">
-                            <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
-                            <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
-                            <p class="tweet-font">
-                                <%= retweet_from.content %>
-                            </p>
-                            <p class="tweet-font main-color">
-                                <%= time_ago_in_words(retweet_from.date) %>
-                            </p>
-                        </div>
-                    <% else %>
-                        <p class="tweet-font">
-                            Tweet Was Deleted...
-                        </p>
-                    <% end %>
-                </div>
-                <p class="tweet-font my-2">
-                    <%= tweet.content %>
-                </p>
-                <p class="tweet-font main-color">
-                    <%= time_ago_in_words(tweet.date) %>
-                </p>
-            </div>
-        <% else %>
-            <% author =  User.find(tweet.user_id) %>
-            <div class="my-5">
-                <%= image_tag(author.avatar, class: "avatar-image") %>
-                <h4 class="tweet-font"><%= author.name %> says</h4>
-                <p class="tweet-font">
-                    <%= tweet.content %>
-                </p>
-                <p class="tweet-font main-color">
-                    <%= time_ago_in_words(tweet.date) %>
-                </p>
             </div>
         <% end %>
-
-    <% end %>
-
+        <%# Tweet Content %>
+        <p class="tweet-font"><%= tweet.content %></p>
+        <%# Tweet Date %>
+        <p class="tweet-font main-color"><%= time_ago_in_words(tweet.date) %></p>
+        <%# Tweet Buttons %>
+        <% if current_user && tweet.user_id == current_user.id %>
+            <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
+            <%= link_to 'Delete', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary tweet-font"%>
+        <% elsif current_user && tweet.user_id != current_user.id %>
+            <%= link_to 'Retweet', retweet_path(tweet.id), method: :post, class: "btn btn-primary tweet-font"%>
+        <% end %>
+    </div>
 <% end %>
 
 <%= paginate @tweets %>
 
+
+    
