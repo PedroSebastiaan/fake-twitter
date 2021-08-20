@@ -12,11 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_field :content %>
+    <div class="d-block">
+      <%= form.label :content, "Be free of this!", class: "main tweet-title" %>
+    </div>
+    <%= form.text_area :content, class: "tweet-space pb-3" %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <%= form.hidden_field :date, :value => DateTime.now %>
+  <div class="actions my-2">
+    <%= form.submit class: "btn btn-primary main" %>
   </div>
 <% end %>

@@ -1,6 +1,5 @@
-<h1>Editing Tweet</h1>
+<div class="text-center main main-color">
+    <h2 class="titles">Edit your tweet!</h2>
+    <%= render 'form', tweet: @tweet %>
+</div>
 
-<%= render 'form', tweet: @tweet %>
-
-<%= link_to 'Show', @tweet %> |
-<%= link_to 'Back', tweets_path %>
