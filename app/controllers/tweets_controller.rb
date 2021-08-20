@@ -1,7 +1,9 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: %i[ show edit update destroy ]
 
-  def show
+  def show  
+    @tweet = Tweet.find(params[:id])
+    @likes = Tweet.all
   end
 
   def retweet

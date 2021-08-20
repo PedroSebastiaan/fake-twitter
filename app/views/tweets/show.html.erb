@@ -1,19 +1,22 @@
-<p id="notice"><%= notice %></p>
+<div class="border border-primary rounded">
+  <div class="my-5 mx-5">
+    <% author =  User.find(@tweet.user_id) %>
+      <%= image_tag(author.avatar, class: "avatar-image") %>
+      <h4 class="tweet-font"><%= author.name %> says</h4>
+      <p class="tweet-font"><%= @tweet.content %></p>
+      <p class="tweet-font main-color"><%= time_ago_in_words(@tweet.date) %></p>
+  </div>
+</div>
 
-<p>
-  <strong>Content:</strong>
-  <%= @tweet.content %>
-</p>
+<h3 class="titles main">All this people likes this tweet!</h3>
 
-<p>
-  <strong>Retweet:</strong>
-  <%= @tweet.retweet_id %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @tweet.date %>
-</p>
-
-<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
-<%= link_to 'Back', tweets_path %>
+<div class="container">
+  <% likes = Like.where(tweet_id: @tweet.id) %>
+  <div class="row text-center">
+  <% likes.each do |like| %>
+    <div class="col-sm-4 p-3">
+      <% author =  User.find(like.user_id) %>
+      <%= image_tag(author.avatar, class: "avatar-image") %>
+    </div>
+  <% end %>
+</div>

@@ -31,7 +31,9 @@
                         <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
                         <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
                         <p class="tweet-font"><%= retweet_from.content %></p>
-                        <p class="tweet-font main-color"><%= time_ago_in_words(retweet_from.date) %></p>
+                        <%= link_to tweet_path(retweet_from.id) do %>
+                            <p class="tweet-font main-color"><%= time_ago_in_words(retweet_from.date) %></p>
+                        <% end %>
                     </div>
                 <% else %>
                     <p class="tweet-font">Tweet Was Deleted...</p>
@@ -41,7 +43,9 @@
         <%# Tweet Content %>
         <p class="tweet-font"><%= tweet.content %></p>
         <%# Tweet Date %>
-        <p class="tweet-font main-color"><%= time_ago_in_words(tweet.date) %></p>
+        <%= link_to tweet_path(tweet.id) do %>
+            <p class="tweet-font main-color"><%= time_ago_in_words(tweet.date) %></p>
+        <% end %>
         <%# Tweet Buttons %>
         <% if current_user && tweet.user_id == current_user.id %>
             <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
@@ -54,18 +58,20 @@
             <p class="tweet-font"><%= tweet.retweet_count %> retweets</p>
         <% end %>
         <%# Like Button %>
-        <% if current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) == nil %>
-            <%= link_to liked_path(tweet.id), method: :post do %>
-                <p class="tweet-font"><i class="far fa-heart"></i><%= Like.where(tweet_id: tweet.id).count %></p>
-            <% end %>
-        <% elsif current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) != nil %>
-            <% unliked = Like.find_by(user_id: current_user.id, tweet_id: tweet.id) %>
-            <%= link_to unliked_path(unliked.id), method: :delete do %>
+        <div class="my-3">
+            <% if current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) == nil %>
+                <%= link_to liked_path(tweet.id), method: :post do %>
+                    <p class="tweet-font"><i class="far fa-heart"></i><%= Like.where(tweet_id: tweet.id).count %></p>
+                <% end %>
+            <% elsif current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) != nil %>
+                <% unliked = Like.find_by(user_id: current_user.id, tweet_id: tweet.id) %>
+                <%= link_to unliked_path(unliked.id), method: :delete do %>
+                    <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
+                <% end %>
+            <% else %>
                 <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
             <% end %>
-        <% else %>
-            <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
-        <% end %>
+        </div>
     </div>
 <% end %>
 
