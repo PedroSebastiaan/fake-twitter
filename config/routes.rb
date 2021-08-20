@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :likes
   resources :tweets
   get 'home/index'
   root 'home#index'
