@@ -22,6 +22,10 @@
     font-family: 'Patrick Hand', cursive;
 }
 
+.textarea {
+
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -256,7 +260,7 @@ margin: 18px
     padding-bottom: 1rem;
 }
 .tweet-space {
-    width: 75%;
+    width: 100%;
 }
 .avatar-image {
     height: 100px;
@@ -270,15 +274,32 @@ margin: 18px
     padding-top: 5px;
     font-size: 30px;
 }
+.boxes {
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 25px;
+    background-color: #E0F7FA;
+}
+.boxes-rt {
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 25px;
+    background-color: #F4F6F6;
+}
 
 // HeroSection
 .hero-section {
-    height: 14rem;
+    height: 500px;
     width: 100%;
     background: image-url('main.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 25% 20%;
+}
+.hero-title {
+    color: #fff;
+    padding-top: 10rem;
+    margin: 0px;
 }
 
 @media (max-width: 420px) {

@@ -1,81 +1,83 @@
-<% if current_user %>
-    <h1 class="titles main">New Tweet!</h1>
-    <%= render 'form', tweet: @tweet %>
-<% end %>
+<div class="container">
+    <% if current_user %>
+        <h2 class="titles main">New Tweet!</h2>
+        <%= render 'form', tweet: @tweet %>
+    <% end %>
 
-<% @tweets.each do |tweet| %>
-    <div class="my-5 border border-primary rounded px-5 py-5">
-        <%# Tweet Author%>
-        <% if current_user && tweet.user_id == current_user.id && tweet.retweet_id != nil %>
-            <%= image_tag(current_user.avatar, class: "avatar-image") %>
-            <h4 class="tweet-font">You retweet</h4>
-        <% elsif current_user && tweet.user_id == current_user.id && tweet.retweet_id == nil %>
-            <%= image_tag(current_user.avatar, class: "avatar-image") %>
-            <h4 class="tweet-font">You say</h4>
-        <% elsif tweet.retweet_id != nil %>
-            <% author =  User.find(tweet.user_id) %>
-            <%= image_tag(author.avatar, class: "avatar-image") %>
-            <h4 class="tweet-font"><%= author.name %> retweets</h4>
-        <% elsif tweet.retweet_id == nil %>
-            <% author =  User.find(tweet.user_id) %>
-            <%= image_tag(author.avatar, class: "avatar-image") %>
-            <h4 class="tweet-font"><%= author.name %> says</h4>
-        <% end %>
-        <%# Retweet Space %>
-        <% if tweet.retweet_id != nil %>
-            <div class="border border-primary rounded">
-                <% if Tweet.exists?(tweet.retweet_id) %>
-                    <% retweet_from = Tweet.find(tweet.retweet_id) %>
-                    <% retweet_author = User.find(retweet_from.user_id) %>
-                    <div class="my-5 mx-5">
-                        <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
-                        <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
-                        <p class="tweet-font"><%= retweet_from.content %></p>
-                        <%= link_to tweet_path(retweet_from.id) do %>
-                            <p class="tweet-font main-color"><%= time_ago_in_words(retweet_from.date) %></p>
-                        <% end %>
-                    </div>
+    <% @tweets.each do |tweet| %>
+        <div class="my-5 border-primary px-5 py-5 boxes">
+            <%# Tweet Author%>
+            <% if current_user && tweet.user_id == current_user.id && tweet.retweet_id != nil %>
+                <%= image_tag(current_user.avatar, class: "avatar-image") %>
+                <h4 class="tweet-font">You retweet</h4>
+            <% elsif current_user && tweet.user_id == current_user.id && tweet.retweet_id == nil %>
+                <%= image_tag(current_user.avatar, class: "avatar-image") %>
+                <h4 class="tweet-font">You say</h4>
+            <% elsif tweet.retweet_id != nil %>
+                <% author =  User.find(tweet.user_id) %>
+                <%= image_tag(author.avatar, class: "avatar-image") %>
+                <h4 class="tweet-font"><%= author.name %> retweets</h4>
+            <% elsif tweet.retweet_id == nil %>
+                <% author =  User.find(tweet.user_id) %>
+                <%= image_tag(author.avatar, class: "avatar-image") %>
+                <h4 class="tweet-font"><%= author.name %> says</h4>
+            <% end %>
+            <%# Retweet Space %>
+            <% if tweet.retweet_id != nil %>
+                <div class="boxes-rt border-primary">
+                    <% if Tweet.exists?(tweet.retweet_id) %>
+                        <% retweet_from = Tweet.find(tweet.retweet_id) %>
+                        <% retweet_author = User.find(retweet_from.user_id) %>
+                        <div class="my-5 mx-5">
+                            <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
+                            <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
+                            <p class="tweet-font"><%= retweet_from.content %></p>
+                            <%= link_to tweet_path(retweet_from.id) do %>
+                                <p class="tweet-font main-color"><%= time_ago_in_words(retweet_from.date) %></p>
+                            <% end %>
+                        </div>
+                    <% else %>
+                        <p class="px-3 pt-3 tweet-font">Tweet Was Deleted...</p>
+                    <% end %>
+                </div>
+            <% end %>
+            <%# Tweet Content %>
+            <p class="tweet-font"><%= tweet.content %></p>
+            <%# Tweet Date %>
+            <%= link_to tweet_path(tweet.id) do %>
+                <p class="tweet-font main-color"><%= time_ago_in_words(tweet.date) %></p>
+            <% end %>
+            <%# Tweet Buttons %>
+            <% if current_user && tweet.user_id == current_user.id %>
+                <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
+                <%= link_to 'Delete', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary tweet-font"%>
+            <% elsif current_user && tweet.user_id != current_user.id %>
+                <%= link_to 'Retweet', retweet_path(tweet.id), method: :post, class: "btn btn-primary tweet-font"%>
+            <% end %>
+            <%# Tweet Count %>
+            <% if tweet.retweet_count != 0 %>
+                <p class="tweet-font"><%= tweet.retweet_count %> retweets</p>
+            <% end %>
+            <%# Like Button %>
+            <div class="my-3">
+                <% if current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) == nil %>
+                    <%= link_to liked_path(tweet.id), method: :post do %>
+                        <p class="tweet-font"><i class="far fa-heart"></i><%= Like.where(tweet_id: tweet.id).count %></p>
+                    <% end %>
+                <% elsif current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) != nil %>
+                    <% unliked = Like.find_by(user_id: current_user.id, tweet_id: tweet.id) %>
+                    <%= link_to unliked_path(unliked.id), method: :delete do %>
+                        <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
+                    <% end %>
                 <% else %>
-                    <p class="tweet-font">Tweet Was Deleted...</p>
-                <% end %>
-            </div>
-        <% end %>
-        <%# Tweet Content %>
-        <p class="tweet-font"><%= tweet.content %></p>
-        <%# Tweet Date %>
-        <%= link_to tweet_path(tweet.id) do %>
-            <p class="tweet-font main-color"><%= time_ago_in_words(tweet.date) %></p>
-        <% end %>
-        <%# Tweet Buttons %>
-        <% if current_user && tweet.user_id == current_user.id %>
-            <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-primary tweet-font" %>
-            <%= link_to 'Delete', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary tweet-font"%>
-        <% elsif current_user && tweet.user_id != current_user.id %>
-            <%= link_to 'Retweet', retweet_path(tweet.id), method: :post, class: "btn btn-primary tweet-font"%>
-        <% end %>
-        <%# Tweet Count %>
-        <% if tweet.retweet_count != 0 %>
-            <p class="tweet-font"><%= tweet.retweet_count %> retweets</p>
-        <% end %>
-        <%# Like Button %>
-        <div class="my-3">
-            <% if current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) == nil %>
-                <%= link_to liked_path(tweet.id), method: :post do %>
-                    <p class="tweet-font"><i class="far fa-heart"></i><%= Like.where(tweet_id: tweet.id).count %></p>
-                <% end %>
-            <% elsif current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) != nil %>
-                <% unliked = Like.find_by(user_id: current_user.id, tweet_id: tweet.id) %>
-                <%= link_to unliked_path(unliked.id), method: :delete do %>
                     <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
                 <% end %>
-            <% else %>
-                <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
-            <% end %>
+            </div>
         </div>
-    </div>
-<% end %>
+    <% end %>
 
-<%= paginate @tweets %>
+    <%= paginate @tweets %>
+</div>
 
 
     
