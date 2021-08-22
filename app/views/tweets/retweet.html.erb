@@ -1,6 +1,6 @@
 <h1 class="titles main">Your Gonna Retweet!</h1>
 
-<div class="border border-primary rounded">
+<div class="boxes border-primary">
     <% author =  User.find(@tweet.user_id) %>
     <div class="my-5 mx-5">
         <%= image_tag(author.avatar, class: "avatar-image") %>
