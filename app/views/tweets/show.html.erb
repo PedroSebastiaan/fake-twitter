@@ -8,7 +8,9 @@
   </div>
 </div>
 
-<h3 class="titles main">All this people likes this tweet!</h3>
+<% if Like.where(tweet_id: @tweet.id).count != 0 %>
+  <h3 class="titles main">All this people likes this tweet!</h3>
+<% end %>
 
 <div class="container">
   <% likes = Like.where(tweet_id: @tweet.id) %>
