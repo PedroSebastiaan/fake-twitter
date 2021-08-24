@@ -56,13 +56,13 @@
             <% end %>
             <%# Tweet Count %>
             <% if tweet.retweet_count != 0 %>
-                <p class="tweet-font"><%= tweet.retweet_count %> retweets</p>
+                <p class="tweet-font"><%= tweet.retweet_count %> <i class="fas fa-retweet"></i></p>
             <% end %>
             <%# Like Button %>
             <div class="my-3">
                 <% if current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) == nil %>
                     <%= link_to liked_path(tweet.id), method: :post do %>
-                        <p class="tweet-font"><i class="far fa-heart"></i><%= Like.where(tweet_id: tweet.id).count %></p>
+                        <p class="tweet-font"><i class="far fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
                     <% end %>
                 <% elsif current_user && Like.find_by(user_id: current_user.id, tweet_id: tweet.id) != nil %>
                     <% unliked = Like.find_by(user_id: current_user.id, tweet_id: tweet.id) %>
