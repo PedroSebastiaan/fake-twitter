@@ -4,6 +4,10 @@
         <%= render 'form', tweet: @tweet %>
     <% end %>
 
+    <% if Follow.find_by(:user_id => current_user.id) == nil %>
+        <h4 class="main new-acc text-center py-5">New account??, no problem, go to find new friends <i class="far fa-compass"></i></h4>
+    <% end %>
+
     <% @tweets.each do |tweet| %>
         <div class="my-5 border-primary px-5 py-5 boxes">
             <%# Tweet Author%>

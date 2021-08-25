@@ -15,10 +15,11 @@
 <div class="container">
   <% likes = Like.where(tweet_id: @tweet.id) %>
   <div class="row text-center">
-  <% likes.each do |like| %>
-    <div class="col-sm-4 p-3">
-      <% author =  User.find(like.user_id) %>
-      <%= image_tag(author.avatar, class: "avatar-image") %>
-    </div>
-  <% end %>
+    <% likes.each do |like| %>
+      <div class="col-sm-4 p-3">
+        <% author =  User.find(like.user_id) %>
+        <%= image_tag(author.avatar, class: "avatar-image") %>
+      </div>
+    <% end %>
+  </div>
 </div>

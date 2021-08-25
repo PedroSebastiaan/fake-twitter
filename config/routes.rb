@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   delete 'unlike/:id', to: 'likes#destroy', as: 'unliked'
   post 'add/:id', to: 'follows#create', as: 'added'
   delete 'out/:id', to: 'follows#destroy', as: 'unfollow'
+  get 'find_people', to: 'users#find_people', as: 'find_people'
+  post 'finded/:id', to: 'follows#finded', as: 'finded'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

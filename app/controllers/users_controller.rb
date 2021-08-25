@@ -7,6 +7,10 @@ class UsersController < ApplicationController
         @tweets = @tweets.page(params[:page])
     end
 
+    def find_people
+        @users = User.all
+    end
+
     private
 
     def set_user

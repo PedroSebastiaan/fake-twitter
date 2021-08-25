@@ -15,6 +15,19 @@ class FollowsController < ApplicationController
         end
     end
 
+    def finded
+        @added = User.find(params[:id])
+        @user = current_user
+        @follow = Follow.new(follow_params.merge(user_id: @user.id, follow_id: @added.id))
+        respond_to do |format|
+            if @follow.save
+            format.html { redirect_to root_path }
+            else
+            format.html { render :new, status: :unprocessable_entity }
+            end
+        end
+    end
+
     def destroy
         @follow = Follow.find(params[:id])
         @follow.destroy
