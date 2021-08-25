@@ -11,5 +11,7 @@ Rails.application.routes.draw do
   post 'retweet/:id', to: 'tweets#retweet', as: 'retweet'
   post 'like/:id', to: 'likes#create', as: 'liked'
   delete 'unlike/:id', to: 'likes#destroy', as: 'unliked'
+  post 'add/:id', to: 'follows#create', as: 'added'
+  delete 'out/:id', to: 'follows#destroy', as: 'unfollow'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

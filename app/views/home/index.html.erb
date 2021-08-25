@@ -73,6 +73,19 @@
                     <p class="tweet-font"><i class="fas fa-heart"></i> <%= Like.where(tweet_id: tweet.id).count %> likes!</p>
                 <% end %>
             </div>
+            <%# Follow Button %>
+            <% if current_user && tweet.user_id != current_user.id %>
+                <% if Follow.find_by(user_id: current_user.id, follow_id: tweet.user_id) != nil %>
+                    <% unfollow = Follow.find_by(user_id: current_user.id, follow_id: tweet.user_id) %>
+                    <%= link_to unfollow_path(unfollow.id), method: :delete do %>
+                        <span><i class="fas fa-user-minus"></i></span>
+                    <% end %>
+                <% else %>
+                    <%= link_to added_path(tweet.id), method: :post do %>
+                        <span><i class="fas fa-user-plus"></i></span>
+                    <% end %>
+                <% end %>
+            <% end %>
         </div>
     <% end %>
 

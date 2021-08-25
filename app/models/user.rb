@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :tweets
   has_many :likes
+  has_many :follows
   validates :avatar, format: {with: /\.(png|jpg|jpeg)\Z/i}, presence: true
   validates :name, presence: true
 end
