@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions', 
     registrations: 'users/registrations'
   }
+  get 'my_tweets/:id', to: 'users#show', as: 'my_tweets'
   post 'retweet/:id', to: 'tweets#retweet', as: 'retweet'
   post 'like/:id', to: 'likes#create', as: 'liked'
   delete 'unlike/:id', to: 'likes#destroy', as: 'unliked'

@@ -3,7 +3,8 @@ class UsersController < ApplicationController
 
     def show
         @user = current_user
-        @tweets = Tweet.where(user_id: @user.id)
+        @tweets = Tweet.where(user_id: @user.id).order(id: :desc)
+        @tweets = @tweets.page(params[:page])
     end
 
     private

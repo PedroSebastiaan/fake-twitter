@@ -16,6 +16,12 @@
                 <% end %>
             </li>
             <li>    
+                <%= link_to my_tweets_path(current_user.id) do %>
+                        <i class="fas fa-comment-dots"></i>
+                        <span class="links_name main">My tweets</span>
+                <% end %>
+            </li>
+            <li>    
                 <%= link_to destroy_user_session_path, method: :delete do %>
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="links_name main">Sign out</span>
