@@ -1,10 +1,11 @@
 <div class="sidebar">
-
-    <div class="logo-details">
-        <i class="fab fa-twitter"></i>
-        <div class="logo_name main">Fake Twitter</div>
-        <i class='bx bx-menu' id="btn" ></i>
-    </div>
+    <%= link_to root_path, class: "no-deco" do %>
+        <div class="logo-details">
+            <i class="fab fa-twitter"></i>
+            <div class="logo_name main">Fake Twitter</div>
+            <i class='bx bx-menu' id="btn" ></i>
+        </div>
+    <% end %>
 
     <ul class="nav-list">
         <% if current_user %>
