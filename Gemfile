@@ -77,3 +77,11 @@ gem 'image_processing'
 # Kaminari
 gem 'kaminari'
 
+# ActiveAdmin
+gem 'activeadmin'
+
+# Plus integrations with:
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'
+

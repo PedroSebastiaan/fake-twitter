@@ -4,7 +4,7 @@
         <%= render 'form', tweet: @tweet %>
     <% end %>
 
-    <% if Follow.find_by(:user_id => current_user.id) == nil %>
+    <% if current_user && Follow.find_by(:user_id => current_user.id) == nil %>
         <h4 class="main new-acc text-center py-5">New account??, no problem, go to find new friends <i class="far fa-compass"></i></h4>
     <% end %>
 
