@@ -1,12 +1,11 @@
 <div class="container">
-    <% if current_user %>
+
         <nav class="navbar justify-content-end ">
             <%= form_with(url: root_path, method: :get, local: :true) do %>
                 <%= text_field_tag :q, nil, placeholder: 'Search', class: "form-control mr-sm-2" %>
                 <%= submit_tag 'Search', class: "btn btn-outline-info my-2 my-sm-0" %>
             <% end %>
         </nav>
-    <% end %>
 
     <% if current_user %>
         <h2 class="titles main">New Tweet!</h2>

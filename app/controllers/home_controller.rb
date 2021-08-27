@@ -17,8 +17,13 @@ class HomeController < ApplicationController
           @newlike = Like.new
         end
       else
-        @tweets = Tweet.order(id: :desc)
-        @tweets = @tweets.page(params[:page])
+        if params[:q]
+          @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(id: :desc)
+          @tweets = @tweets.page(params[:page])
+        else
+          @tweets = Tweet.order(id: :desc)
+          @tweets = @tweets.page(params[:page])
+        end
       end
   end
 
