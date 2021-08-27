@@ -39,6 +39,12 @@
             </li>
         <% else %>
             <li>
+                <%= link_to root_path do %>
+                    <i class="fas fa-home"></i>
+                    <span class="links_name main">Home</span>
+                <% end %>
+            </li>
+            <li>
                 <%= link_to  new_user_session_path do %>
                     <i class="fas fa-sign-in-alt"></i>
                     <span class="links_name main">Sign in</span>
