@@ -1,7 +1,18 @@
 <div class="container">
     <% if current_user %>
+        <nav class="navbar justify-content-end">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav>
+    <% end %>
+
+    <% if current_user %>
         <h2 class="titles main">New Tweet!</h2>
         <%= render 'form', tweet: @tweet %>
+    <% elsif %>
+        <h2 class="titles main text-center">The people say!</h2>
     <% end %>
 
     <% if current_user && Follow.find_by(:user_id => current_user.id) == nil %>
