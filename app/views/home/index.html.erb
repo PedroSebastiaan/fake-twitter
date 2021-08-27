@@ -45,7 +45,16 @@
                         <div class="my-5 mx-5">
                             <%= image_tag(retweet_author.avatar, class: "avatar-image") %>
                             <h4 class="tweet-font"><%= retweet_author.name %> says</h4>
-                            <p class="tweet-font"><%= retweet_from.content %></p>
+                            <% content = retweet_from.content.split(' ') %>
+                            <% content = content.map do |i| %>
+                                <% if i.match('#') != nil %>
+                                    <% i = link_to "#{i}", "/?utf8=✓&q=#{i.delete!"#"}&commit=Search", method: :get, local: :true %>
+                                <% else %>
+                                    <% i = "#{i}" %>
+                                <% end %>
+                            <% end %>
+                            <% content = content.join(' ') %>
+                            <p class="tweet-font"><%= content.html_safe %></p>
                             <%= link_to tweet_path(retweet_from.id) do %>
                                 <p class="tweet-font main-color"><%= time_ago_in_words(retweet_from.date) %></p>
                             <% end %>
@@ -56,7 +65,16 @@
                 </div>
             <% end %>
             <%# Tweet Content %>
-            <p class="tweet-font"><%= tweet.content %></p>
+            <% content = tweet.content.split(' ') %>
+            <% content = content.map do |i| %>
+                <% if i.match('#') != nil %>
+                    <% i = link_to "#{i}", "/?utf8=✓&q=#{i.delete!"#"}&commit=Search", method: :get, local: :true %>
+                <% else %>
+                    <% i = "#{i}" %>
+                <% end %>
+            <% end %>
+            <% content = content.join(' ') %>
+            <p class="tweet-font"><%= content.html_safe %></p>
             <%# Tweet Date %>
             <%= link_to tweet_path(tweet.id) do %>
                 <p class="tweet-font main-color"><%= time_ago_in_words(tweet.date) %></p>
