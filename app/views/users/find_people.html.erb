@@ -6,11 +6,10 @@
         <%= submit_tag 'Search', class: "btn btn-outline-info my-2 my-sm-0" %>
     <% end %>
 </nav>
-
+<% @users = @users.where.not(id: current_user.id) %>
 <div class="row friends">
     <% @users.each do |user| %>
-        <div class="col-sm-4 p-3">
-            <% if user.id != current_user.id %>
+            <div class="col-sm-4 p-3">
                 <%= image_tag(user.avatar, class: "avatar-image") %>
                 <span class="tweet-font"><%= user.name %></span>
                 <% if Follow.find_by(user_id: current_user.id, follow_id: user.id) != nil %>
@@ -23,8 +22,7 @@
                         <span><i class="fas fa-user-plus"></i></span>
                     <% end %>
                 <% end %>
-            <% end %>
-        </div>
+            </div>
     <% end %>
 </div>
 
