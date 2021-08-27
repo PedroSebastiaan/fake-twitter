@@ -17,6 +17,20 @@ class UsersController < ApplicationController
         end
     end
 
+    def modify
+        @user = User.find(params[:id])
+
+        if @user.suspended? 
+            @user.update(suspended: false)
+        else
+            @user.update(suspended: true)
+        end
+
+        respond_to do |format|
+            format.html { redirect_to admin_users_path, notice: 'Status changed' }
+        end
+    end
+
     private
 
     def set_user
