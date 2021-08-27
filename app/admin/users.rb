@@ -1,18 +1,21 @@
 ActiveAdmin.register User do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :name, :avatar
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :name, :avatar]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  index do
+    selectable_column
+    column :id 
+    column :name
+    column :email
+    column :created_at
+    column "tweets" do |u|
+      Tweet.where(user_id: u.id, retweet_id: nil).count
+    end
+    column "retweets" do |u|
+      (Tweet.where(user_id: u.id).count) - (Tweet.where(user_id: u.id, retweet_id: nil).count)
+    end
+    column "likes" do |u|
+      Like.where(user_id: u.id).count
+    end
+    actions
+  end
   
 end

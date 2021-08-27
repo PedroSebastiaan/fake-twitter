@@ -4,9 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :validatable
 
-  has_many :tweets
-  has_many :likes
-  has_many :follows
+  has_many :tweets, dependent: :delete_all
+  has_many :likes, dependent: :delete_all
+  has_many :follows, dependent: :delete_all
   validates :avatar, format: {with: /\.(png|jpg|jpeg)\Z/i}, presence: true
   validates :name, presence: true
 end
