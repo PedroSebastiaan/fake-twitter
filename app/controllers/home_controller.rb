@@ -1,16 +1,25 @@
 class HomeController < ApplicationController
   def index
-    if current_user
-      @my_follows = Follow.where(user_id: current_user.id).pluck(:follow_id)
-      @tweets = Tweet.where(:user_id => @my_follows).order(id: :desc)
-      @tweets = @tweets.page(params[:page])
-      @newtweet = Tweet.new
-      @likes = Like.all
-      @newlike = Like.new
-    else
-      @tweets = Tweet.order(id: :desc)
-      @tweets = @tweets.page(params[:page])
-    end    
+      if current_user
+        if params[:q]
+          @my_follows = Follow.where(user_id: current_user.id).pluck(:follow_id)
+          @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(id: :desc)
+          @tweets = @tweets.page(params[:page])
+          @newtweet = Tweet.new
+          @likes = Like.all
+          @newlike = Like.new
+        else
+          @my_follows = Follow.where(user_id: current_user.id).pluck(:follow_id)
+          @tweets = Tweet.where(:user_id => @my_follows).order(id: :desc)
+          @tweets = @tweets.page(params[:page])
+          @newtweet = Tweet.new
+          @likes = Like.all
+          @newlike = Like.new
+        end
+      else
+        @tweets = Tweet.order(id: :desc)
+        @tweets = @tweets.page(params[:page])
+      end
   end
 
   private

@@ -1,10 +1,10 @@
 <div class="container">
     <% if current_user %>
-        <nav class="navbar justify-content-end">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-            </form>
+        <nav class="navbar justify-content-end ">
+            <%= form_with(url: root_path, method: :get, local: :true) do %>
+                <%= text_field_tag :q, nil, placeholder: 'Search', class: "form-control mr-sm-2" %>
+                <%= submit_tag 'Search', class: "btn btn-outline-info my-2 my-sm-0" %>
+            <% end %>
         </nav>
     <% end %>
 

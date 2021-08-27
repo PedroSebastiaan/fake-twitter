@@ -249,6 +249,10 @@ margin: 18px
 }
 
 // MainContent
+.form-control {
+    display: inline-block;
+    width: 70%;
+}
 .main-content {
     margin-top: 5rem;
     margin-left: 10rem;
