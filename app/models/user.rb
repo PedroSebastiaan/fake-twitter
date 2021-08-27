@@ -9,4 +9,5 @@ class User < ApplicationRecord
   has_many :follows, dependent: :delete_all
   validates :avatar, format: {with: /\.(png|jpg|jpeg)\Z/i}, presence: true
   validates :name, presence: true
+  max_paginates_per 15
 end

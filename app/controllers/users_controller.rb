@@ -8,7 +8,13 @@ class UsersController < ApplicationController
     end
 
     def find_people
-        @users = User.all
+        if params[:q]
+            @users = User.where('lower(name) LIKE ?', "%#{params[:q]}%").order(id: :desc)
+            @users = @users.page(params[:page])
+        else
+            @users = User.all
+            @users = @users.page(params[:page])
+        end
     end
 
     private

@@ -1,18 +1,31 @@
-<div class="row text-center">
+<h2 class="titles main text-center">Find new people!</h2>
+
+<nav class="navbar justify-content-end pb-5">
+    <%= form_with(url: find_people_path, method: :get, local: :true) do %>
+        <%= text_field_tag :q, nil, placeholder: 'Search', class: "form-control mr-sm-2" %>
+        <%= submit_tag 'Search', class: "btn btn-outline-info my-2 my-sm-0" %>
+    <% end %>
+</nav>
+
+<div class="row friends">
     <% @users.each do |user| %>
         <div class="col-sm-4 p-3">
-            <%= image_tag(user.avatar, class: "avatar-image") %>
-            <span class="tweet-font"><%= user.name %></span>
-            <% if Follow.find_by(user_id: current_user.id, follow_id: user.id) != nil %>
-                <% unfollow = Follow.find_by(user_id: current_user.id, follow_id: user.id) %>
-                <%= link_to unfollow_path(unfollow.id), method: :delete do %>
-                    <span><i class="fas fa-user-minus"></i></span>
-                <% end %>
-            <% else %>
-                <%= link_to finded_path(user.id), method: :post do %>
-                    <span><i class="fas fa-user-plus"></i></span>
+            <% if user.id != current_user.id %>
+                <%= image_tag(user.avatar, class: "avatar-image") %>
+                <span class="tweet-font"><%= user.name %></span>
+                <% if Follow.find_by(user_id: current_user.id, follow_id: user.id) != nil %>
+                    <% unfollow = Follow.find_by(user_id: current_user.id, follow_id: user.id) %>
+                    <%= link_to unfollow_path(unfollow.id), method: :delete do %>
+                        <span><i class="fas fa-user-minus"></i></span>
+                    <% end %>
+                <% else %>
+                    <%= link_to finded_path(user.id), method: :post do %>
+                        <span><i class="fas fa-user-plus"></i></span>
+                    <% end %>
                 <% end %>
             <% end %>
         </div>
     <% end %>
 </div>
+
+<%= paginate @users %>
