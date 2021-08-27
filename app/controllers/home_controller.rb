@@ -3,7 +3,7 @@ class HomeController < ApplicationController
       if current_user
         if params[:q]
           @my_follows = Follow.where(user_id: current_user.id).pluck(:follow_id)
-          @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(id: :desc)
+          @tweets = Tweet.where('lower(content) LIKE ?', "%#{params[:q]}%").order(id: :desc)
           @tweets = @tweets.page(params[:page])
           @newtweet = Tweet.new
           @likes = Like.all
@@ -18,7 +18,7 @@ class HomeController < ApplicationController
         end
       else
         if params[:q]
-          @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(id: :desc)
+          @tweets = Tweet.where('lower(content) LIKE ?', "%#{params[:q]}%").order(id: :desc)
           @tweets = @tweets.page(params[:page])
         else
           @tweets = Tweet.order(id: :desc)
