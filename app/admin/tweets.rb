@@ -1,18 +1,25 @@
 ActiveAdmin.register Tweet do
+  config.batch_actions = false
+  permit_params :id, :content, :retweet_id, :retweet_count, :created_at, :updated_at, :user_id
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :content, :retweet_id, :date, :user_id, :retweet_count
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:content, :retweet_id, :date, :user_id, :retweet_count]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  index do
+    selectable_column
+    column :id 
+    column :content
+    column :retweet_id
+    column :created_at
+    column :updated_at
+    column "Retweets" do |u|
+      Tweet.where(retweet_id: u.id).count
+    end
+    column "User" do |u|
+      User.find(u.user_id).name
+    end
+    column "likes" do |u|
+      Like.where(:tweet_id => u.id).count
+    end
+    actions
+    
+  end
   
 end
