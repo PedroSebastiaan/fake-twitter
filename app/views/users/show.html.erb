@@ -1,4 +1,21 @@
-<div class="container">
+<div class="container text-center">
+    <div>
+        <% mentions = Tweet.where(user_id: current_user.id).pluck(:id) %>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><i class="fab fa-twitter"></i></td>
+                    <td><i class="fas fa-quote-right"></i></td>
+                    <td><i class="fas fa-heart"></i></td>
+                </tr>
+                <tr>
+                    <td><%= Tweet.where(user_id: current_user.id).count %></td>
+                    <td><%= Tweet.where(retweet_id: mentions).count %></td>
+                    <td><%= Like.where(tweet_id: mentions).count %></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <h2 class="titles main">Your Tweet History!</h2>
     <% @tweets.each do |tweet| %>
         <div class="my-5 border-primary px-5 py-5 boxes">
