@@ -1,7 +1,7 @@
 ActiveAdmin.register Tweet do
   config.batch_actions = false
   permit_params :id, :content, :retweet_id, :retweet_count, :created_at, :updated_at, :user_id
-
+  actions :index, :show, :new, :create, :update, :edit
   index do
     selectable_column
     column :id 

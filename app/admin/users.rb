@@ -1,6 +1,7 @@
 ActiveAdmin.register User do
   config.batch_actions = false
   permit_params :name, :avatar, :email, :suspended
+  actions :index, :show, :new, :create, :update, :edit
 
   index do
     selectable_column
