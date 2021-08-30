@@ -5,13 +5,17 @@
             <tbody>
                 <tr>
                     <td><i class="fab fa-twitter"></i></td>
-                    <td><i class="fas fa-quote-right"></i></td>
+                    <td><i class="fas fa-at"></i></i></td>
                     <td><i class="fas fa-heart"></i></td>
+                    <td><i class="fas fa-user-plus"></i></i></td>
+                    <td><i class="fas fa-user-friends"></i></td>
                 </tr>
                 <tr>
                     <td><%= Tweet.where(user_id: current_user.id).count %></td>
                     <td><%= Tweet.where(retweet_id: mentions).count %></td>
                     <td><%= Like.where(tweet_id: mentions).count %></td>
+                    <td><%= Follow.where(follow_id: current_user.id).count %></td>
+                    <td><%= Follow.where(user_id: current_user.id).count %></td>
                 </tr>
             </tbody>
         </table>
