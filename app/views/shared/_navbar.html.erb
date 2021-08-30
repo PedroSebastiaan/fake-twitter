@@ -1,7 +1,7 @@
 <div class="sidebar">
         <div class="logo-details">
             <i class="fab fa-twitter"></i>
-            <div class="logo_name main">Fake Twitter</div>
+            <div class="logo_name nav-font">Fake Twitter</div>
             <i class='bx bx-menu' id="btn" ></i>
         </div>
 
@@ -10,50 +10,50 @@
             <li>
                 <%= link_to root_path do %>
                     <i class="fas fa-home"></i>
-                    <span class="links_name main">Home</span>
+                    <span class="links_name">Home</span>
                 <% end %>
             </li>
             <li>
                 <%= link_to edit_user_registration_path do %>
                     <i class="fas fa-user-edit"></i>
-                    <span class="links_name main">Edit Profile</span>
+                    <span class="links_name">Edit Profile</span>
                 <% end %>
             </li>
             <li>    
                 <%= link_to my_tweets_path(current_user.id) do %>
                         <i class="fas fa-user"></i>
-                        <span class="links_name main">My tweets</span>
+                        <span class="links_name">My tweets</span>
                 <% end %>
             </li>
             <li>
                 <%= link_to find_people_path do %>
                     <i class="fas fa-compass"></i>
-                    <span class="links_name main">Find people</span>
+                    <span class="links_name">Find people</span>
                 <% end %>
             </li>
             <li>    
                 <%= link_to destroy_user_session_path, method: :delete do %>
                         <i class="fas fa-sign-out-alt"></i>
-                        <span class="links_name main">Sign out</span>
+                        <span class="links_name">Sign out</span>
                 <% end %>
             </li>
         <% else %>
             <li>
                 <%= link_to root_path do %>
                     <i class="fas fa-home"></i>
-                    <span class="links_name main">Home</span>
+                    <span class="links_name">Home</span>
                 <% end %>
             </li>
             <li>
                 <%= link_to  new_user_session_path do %>
                     <i class="fas fa-sign-in-alt"></i>
-                    <span class="links_name main">Sign in</span>
+                    <span class="links_name">Sign in</span>
                 <% end %>
             </li>
             <li>
                 <%= link_to new_user_registration_path do %>
                     <i class="fas fa-user-plus"></i>
-                    <span class="links_name main">Sign up</span>
+                    <span class="links_name">Sign up</span>
                 <% end %>
             </li>
         <% end %>

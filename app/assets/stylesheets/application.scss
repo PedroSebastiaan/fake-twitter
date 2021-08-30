@@ -19,13 +19,17 @@
 }
 
 .tweet-font {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.nav-font {
+    font-family: 'Domine', serif;
 }
 
 .main-color {
@@ -67,11 +71,10 @@ transition: all 0.5s ease;
 }
 .sidebar .logo-details .logo_name{
 color: #fff;
-font-size: 30px;
+font-size: 27px;
 font-weight: 600;
 opacity: 0;
 transition: all 0.5s ease;
-font-style: italic;
 }
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name{
