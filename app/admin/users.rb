@@ -13,6 +13,9 @@ ActiveAdmin.register User do
     column "Suspend" do |u|
       button_to 'Change status', change_path(u.id), method: :patch
     end
+    column "follows" do |u|
+      Follow.where(user_id: u.id).count
+    end
     column "tweets" do |u|
       Tweet.where(user_id: u.id, retweet_id: nil).count
     end
