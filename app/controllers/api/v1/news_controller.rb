@@ -15,6 +15,13 @@ module Api
                 end
                 render json: last_tweets
             end
+            def between_tweets
+                @d1 = params[:d1]
+                @d2 = params[:d2]
+                @tweets = Tweet.where('date > ? AND date < ?', @d1, @d2)
+                between_tweets = @tweets
+                render json: between_tweets
+            end
         end
     end
 end
