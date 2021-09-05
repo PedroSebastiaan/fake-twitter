@@ -68,6 +68,7 @@ gem 'jquery-rails'
 
 # Devise
 gem 'devise'
+gem 'devise_token_auth'
 
 # Gravatar
 gem 'gravatar_image_tag', github: 'mdeering/gravatar_image_tag'
@@ -84,4 +85,7 @@ gem 'activeadmin'
 gem 'cancancan'
 gem 'draper'
 gem 'pundit'
+
+# Rack cors
+gem 'rack-cors'
 

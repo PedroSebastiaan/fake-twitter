@@ -54,6 +54,12 @@ gem 'jquery-rails'
 ```bash
 # Devise
 gem 'devise'
+gem 'devise_token_auth'
+```
+
+```bash
+# Rack-cors
+gem 'rack-cors'
 ```
 
 ```bash
@@ -98,3 +104,28 @@ Admin panel and added interactions was provided by activeadmin gem.
 email: admin@gmail.com
 
 password: 123123
+
+## For Api's usage
+Auth method: http basic authentication
+
+name: pedro
+
+password: 123123
+
+### Routes
+
+For last 50 tweets: http://localhost:3000/api/v1/controller/news (get)
+
+For tweets between two dates (example): http://localhost:3000/api/v1/controller/2021-09-05/2021-09-10 (get)
+
+For tweet create: http://localhost:3000/api/v1/controller/create (post)
+
+You body must be like: 
+
+```json
+{
+    "tweet": {
+        "content": "Here your content"
+    }
+}
+```

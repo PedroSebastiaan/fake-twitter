@@ -1,6 +1,8 @@
 module Api
     module V1
         class NewsController < V1Controller
+            include ActionController::HttpAuthentication::Basic::ControllerMethods
+            http_basic_authenticate_with name: "pedro", password: "123123", only: :create
             def last_tweets
                 @tweets = Tweet.last(50)
                 last_tweets = @tweets.map do |tweet|
@@ -21,6 +23,19 @@ module Api
                 @tweets = Tweet.where('date > ? AND date < ?', @d1, @d2)
                 between_tweets = @tweets
                 render json: between_tweets
+            end
+            def create
+                @author = User.find_by(email: "pedro@gmail.com")
+                @tweet = Tweet.new(tweet_params.merge(user_id: @author.id, date: DateTime.now))
+                if @tweet.save
+                    render json: @tweet, status: :created, location: @tweet
+                else
+                    render json: @tweet.errors, status: :unprocessable_entity
+                end
+            end
+            private 
+            def tweet_params
+                params.require(:tweet).permit(:content, :retweet_id, :date)
             end
         end
     end

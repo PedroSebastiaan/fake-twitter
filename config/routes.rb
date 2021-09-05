@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'controller/news', to:'news#last_tweets'
       get 'controller/:d1/:d2', to:'news#between_tweets'
+      post 'controller/create', to: 'news#create'
     end
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
