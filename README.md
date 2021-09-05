@@ -112,6 +112,12 @@ name: pedro
 
 password: 123123
 
+### Headers
+
+Content-Type > application/json
+
+X-EMAIL > your@email.com
+
 ### Routes
 
 For last 50 tweets: http://localhost:3000/api/v1/controller/news (get)

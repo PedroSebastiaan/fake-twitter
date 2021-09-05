@@ -25,7 +25,7 @@ module Api
                 render json: between_tweets
             end
             def create
-                @author = User.find_by(email: "pedro@gmail.com")
+                @author = User.find_by(email: request.headers["X-EMAIL"])
                 @tweet = Tweet.new(tweet_params.merge(user_id: @author.id, date: DateTime.now))
                 if @tweet.save
                     render json: @tweet, status: :created, location: @tweet
